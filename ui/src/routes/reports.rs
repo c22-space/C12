@@ -54,7 +54,7 @@ pub fn Reports() -> impl IntoView {
             spawn_local(async move {
                 let _ = tauri::export_sources_csv(
                     period.id,
-                    &format!("c12-scope-data-{}.csv", period.year),
+                    &format!("c6-scope-data-{}.csv", period.year),
                 )
                 .await;
             });

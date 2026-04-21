@@ -1,4 +1,4 @@
-# c12
+# C6
 
 Desktop carbon accounting software for organisations reporting under GRI 305, ISO 14064-1, and UNGC COP. Works fully offline. No spreadsheets.
 
@@ -22,7 +22,7 @@ Desktop carbon accounting software for organisations reporting under GRI 305, IS
 ## Architecture
 
 ```
-c12-accounting/
+C6-accounting/
 ├── src-tauri/              # Rust backend (Tauri 2)
 │   ├── src/
 │   │   ├── engine/         # Calculation engine: scope1, scope2, scope3, gwp, uncertainty
@@ -46,7 +46,7 @@ c12-accounting/
 │       ├── tauri.ts        # Typed invoke wrappers
 │       └── stores/app.ts   # activeOrg, activePeriod, currentRoute
 │
-└── worker/                 # Cloudflare Worker → api.c12.c22.space
+└── worker/                 # Cloudflare Worker → api.C6.c22.space
     ├── src/
     │   ├── index.ts        # Route dispatch
     │   ├── auth.ts         # JWT issue/refresh + 14-day trial activation
@@ -147,7 +147,7 @@ cd worker && pnpm deploy
 
 ```
 App (tauri-plugin-updater)
-  → GET https://api.c12.c22.space/updates/check?platform=darwin-aarch64&version=x.y.z
+  → GET https://api.C6.c22.space/updates/check?platform=darwin-aarch64&version=x.y.z
   → Worker reads latest.json from R2
   → Returns { version, url (signed R2 URL), signature (ed25519) }
   → App verifies signature, downloads, applies

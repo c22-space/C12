@@ -5,7 +5,7 @@ use crate::store::AppStore;
 use crate::tauri;
 
 const DOCS_URL: &str =
-    "https://github.com/c22-space/c12-accounting/blob/main/docs/guide.md";
+    "https://github.com/c22-space/C6/blob/main/docs/guide.md";
 
 struct NavItem {
     path: &'static str,

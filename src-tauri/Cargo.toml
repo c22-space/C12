@@ -1,12 +1,12 @@
 [package]
-name = "c12"
+name = "c6"
 version = "0.1.0"
-description = "c12 — Carbon Accounting Software"
+description = "C6 — Carbon Accounting Software"
 authors = ["c22 Space"]
 edition = "2021"
 
 [lib]
-name = "c12_lib"
+name = "c6_lib"
 crate-type = ["lib", "cdylib", "staticlib"]
 
 [build-dependencies]

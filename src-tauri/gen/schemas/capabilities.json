@@ -1,1 +1,1 @@
-{"default":{"identifier":"default","description":"Default capability for c12","local":true,"windows":["main"],"permissions":["core:default","shell:allow-open","dialog:default","fs:default","updater:default"],"platforms":["linux","macOS","windows"]}}
+{"default":{"identifier":"default","description":"Default capability for C6","local":true,"windows":["main"],"permissions":["core:default","shell:allow-open","dialog:default","fs:default","updater:default"],"platforms":["linux","macOS","windows"]}}

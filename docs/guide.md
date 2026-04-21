@@ -1,6 +1,6 @@
-# c12 User Guide
+# C6 User Guide
 
-c12 is a desktop app for measuring and reporting your organisation's greenhouse gas emissions. This guide walks you through the full workflow from first launch to a finished GRI 305 report.
+C6 is a desktop app for measuring and reporting your organisation's greenhouse gas emissions. This guide walks you through the full workflow from first launch to a finished GRI 305 report.
 
 ---
 
@@ -21,7 +21,7 @@ c12 is a desktop app for measuring and reporting your organisation's greenhouse 
 
 ## 1. First launch
 
-When you open c12 for the first time you will see a two-step setup wizard.
+When you open C6 for the first time you will see a two-step setup wizard.
 
 ### Step 1 — Organisation
 
@@ -99,7 +99,7 @@ For each emission source you need three numbers from your records (invoices, met
 | **Emission factor** | kg of CO₂e emitted per unit of activity. Look this up in the DEFRA or EPA tables (links below) | 2.042 |
 | **EF unit** | Unit for the factor, matching activity unit | kgCO2e/m³ |
 | **EF source** | Where you found the factor | DEFRA 2024 |
-| **GWP value** | Global Warming Potential of the gas relative to CO₂. For CO2 this is always **1**. For CH4 (AR6) it is **29.8**. c12 uses AR6 by default — check the IPCC AR6 table if you change the gas type | 1 |
+| **GWP value** | Global Warming Potential of the gas relative to CO₂. For CO2 this is always **1**. For CH4 (AR6) it is **29.8**. C6 uses AR6 by default — check the IPCC AR6 table if you change the gas type | 1 |
 | **Uncertainty %** | Your confidence in the data. Use **5%** for invoice-based data, **10–15%** for estimates | 5 |
 
 ### Common emission factors
@@ -148,7 +148,7 @@ Use the factor from your energy contract. If you have no contract (you buy from 
 | PPA | Power Purchase Agreement with a wind/solar farm |
 | GG / Guarantee of Origin | European green energy certificate |
 
-If you have a PPA or green certificate, your market-based factor may be 0. Enter 0 and select the correct instrument type — c12 records the contractual coverage percentage automatically.
+If you have a PPA or green certificate, your market-based factor may be 0. Enter 0 and select the correct instrument type — C6 records the contractual coverage percentage automatically.
 
 ### Common Scope 2 factors
 
@@ -206,7 +206,7 @@ An intensity ratio expresses your emissions relative to a business metric (reven
 | Include Scope 2 | Yes |
 | Include Scope 3 | Optional |
 
-c12 calculates the ratio automatically and shows it in the report.
+C6 calculates the ratio automatically and shows it in the report.
 
 ### 305-5 Emission reductions
 
@@ -219,11 +219,11 @@ Record deliberate reductions compared to a baseline — for example after switch
 | Current tCO₂e | 980 |
 | Methodology | "Operational efficiency — boiler upgrade programme" |
 
-c12 calculates the reduction (270 tCO₂e, 21.6%) automatically.
+C6 calculates the reduction (270 tCO₂e, 21.6%) automatically.
 
 ### 305-6 ODS emissions
 
-Ozone-depleting substances (refrigerants such as R-22, R-404A) expressed in CFC-11 equivalent tonnes. Enter production, import, and export quantities from your maintenance records. The conversion is pre-loaded in c12.
+Ozone-depleting substances (refrigerants such as R-22, R-404A) expressed in CFC-11 equivalent tonnes. Enter production, import, and export quantities from your maintenance records. The conversion is pre-loaded in C6.
 
 ### 305-7 Air quality emissions
 
@@ -304,4 +304,4 @@ Go to **Settings → Periods** to add a new reporting year. Each period is indep
 
 ---
 
-*Questions or issues? Open an issue on [GitHub](https://github.com/c22-space/c12-accounting/issues).*
+*Questions or issues? Open an issue on [GitHub](https://github.com/c22-space/C6-accounting/issues).*

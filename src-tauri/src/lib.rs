@@ -18,7 +18,7 @@ pub fn run() {
                 .expect("failed to get app data dir");
             std::fs::create_dir_all(&data_dir)?;
 
-            let db_path = data_dir.join("c12.db");
+            let db_path = data_dir.join("C6.db");
             let database = db::Database::open(&db_path)
                 .expect("failed to open database");
             database.migrate()
@@ -71,5 +71,5 @@ pub fn run() {
             commands::reports::delete_air_emission,
         ])
         .run(tauri::generate_context!())
-        .expect("error while running c12");
+        .expect("error while running C6");
 }

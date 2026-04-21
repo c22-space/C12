@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2.json",
-  "productName": "c12",
+  "productName": "C6",
   "version": "0.1.0",
-  "identifier": "space.c22.c12",
+  "identifier": "space.c22.c6",
   "build": {
     "beforeDevCommand": "cd ui && trunk serve --port 5173",
     "devUrl": "http://localhost:5173",
@@ -14,7 +14,7 @@
     "windows": [
       {
         "label": "main",
-        "title": "c12 — Carbon Accounting",
+        "title": "C6 — Carbon Accounting",
         "width": 1280,
         "height": 800,
         "minWidth": 960,
@@ -41,7 +41,7 @@
   "plugins": {
     "updater": {
       "active": true,
-      "endpoints": ["https://api.c12.c22.space/updates/check"],
+      "endpoints": ["https://api.c6.c22.space/updates/check"],
       "pubkey": "",
       "windows": {
         "installMode": "passive"

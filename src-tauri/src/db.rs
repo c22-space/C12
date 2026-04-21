@@ -72,7 +72,7 @@ mod tests {
     #[test]
     fn migrate_creates_core_tables() {
         let dir = tempdir().unwrap();
-        let db = Database::open(&dir.path().join("c12.db")).unwrap();
+        let db = Database::open(&dir.path().join("c6.db")).unwrap();
         db.migrate().unwrap();
         let conn = db.0.lock().unwrap();
         for table in &["organizations", "entities", "reporting_periods",
@@ -89,7 +89,7 @@ mod tests {
     #[test]
     fn migrate_is_idempotent() {
         let dir = tempdir().unwrap();
-        let db = Database::open(&dir.path().join("c12.db")).unwrap();
+        let db = Database::open(&dir.path().join("c6.db")).unwrap();
         db.migrate().unwrap();
         db.migrate().unwrap(); // second run must not error or duplicate data
         let conn = db.0.lock().unwrap();
@@ -103,7 +103,7 @@ mod tests {
     #[test]
     fn migrate_seeds_gwp_values() {
         let dir = tempdir().unwrap();
-        let db = Database::open(&dir.path().join("c12.db")).unwrap();
+        let db = Database::open(&dir.path().join("c6.db")).unwrap();
         db.migrate().unwrap();
         let conn = db.0.lock().unwrap();
         let count: i64 = conn.query_row(

@@ -1,21 +1,21 @@
-name = "c12-api"
+name = "c6-api"
 main = "build/worker/shim.mjs"
 compatibility_date = "2025-01-01"
 
-# Deployed at: https://api.c12.c22.space
-routes = [{ pattern = "api.c12.c22.space/*", zone_name = "c22.space" }]
+# Deployed at: https://api.c6.c22.space
+routes = [{ pattern = "api.c6.c22.space/*", zone_name = "c22.space" }]
 
 [build]
 command = "cargo install -q worker-build && worker-build --release"
 
 [[d1_databases]]
 binding = "DB"
-database_name = "c12-enterprise"
+database_name = "c6-enterprise"
 database_id = "01dd4dc8-009a-42af-8720-da12a654b9d7"
 
 [[r2_buckets]]
 binding = "UPDATES"
-bucket_name = "c12-updates"
+bucket_name = "c6-updates"
 
 [vars]
 DODO_WEBHOOK_SECRET = ""     # set via wrangler secret put DODO_WEBHOOK_SECRET
