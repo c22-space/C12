@@ -64,16 +64,6 @@ pub fn create_org(
 }
 
 #[tauri::command]
-pub fn get_org(db: State<Database>, id: i64) -> Result<Option<Organization>> {
-    let conn = db.0.lock().unwrap();
-    match get_org_inner(&conn, id) {
-        Ok(org) => Ok(Some(org)),
-        Err(crate::error::Error::Database(rusqlite::Error::QueryReturnedNoRows)) => Ok(None),
-        Err(e) => Err(e),
-    }
-}
-
-#[tauri::command]
 pub fn list_orgs(db: State<Database>) -> Result<Vec<Organization>> {
     let conn = db.0.lock().unwrap();
     let mut stmt = conn.prepare(

@@ -30,7 +30,6 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             // Org & configuration
             commands::org::create_org,
-            commands::org::get_org,
             commands::org::list_orgs,
             commands::org::update_org,
             commands::org::create_entity,

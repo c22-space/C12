@@ -1,4 +1,3 @@
-pub mod gwp;
 pub mod scope1;
 pub mod scope2;
 pub mod scope3;

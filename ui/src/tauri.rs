@@ -64,9 +64,6 @@ pub async fn list_orgs() -> Result<Vec<Organization>, String> {
     invoke("list_orgs", &()).await
 }
 
-pub async fn get_org(id: i64) -> Result<Option<Organization>, String> {
-    invoke("get_org", &serde_json::json!({ "id": id })).await
-}
 
 #[derive(Serialize)]
 #[serde(rename_all = "camelCase")]
