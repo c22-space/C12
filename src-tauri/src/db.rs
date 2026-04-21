@@ -64,6 +64,61 @@ pub(crate) fn test_conn() -> Connection {
     conn
 }
 
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use tempfile::tempdir;
+
+    #[test]
+    fn migrate_creates_core_tables() {
+        let dir = tempdir().unwrap();
+        let db = Database::open(&dir.path().join("c12.db")).unwrap();
+        db.migrate().unwrap();
+        let conn = db.0.lock().unwrap();
+        for table in &["organizations", "entities", "reporting_periods",
+                       "emission_sources", "gwp_values", "emission_factors"] {
+            let exists: i64 = conn.query_row(
+                "SELECT COUNT(*) FROM sqlite_master WHERE type='table' AND name=?1",
+                params![table],
+                |r| r.get(0),
+            ).unwrap();
+            assert_eq!(exists, 1, "table '{table}' should exist after migration");
+        }
+    }
+
+    #[test]
+    fn migrate_is_idempotent() {
+        let dir = tempdir().unwrap();
+        let db = Database::open(&dir.path().join("c12.db")).unwrap();
+        db.migrate().unwrap();
+        db.migrate().unwrap(); // second run must not error or duplicate data
+        let conn = db.0.lock().unwrap();
+        let count: i64 = conn.query_row(
+            "SELECT COUNT(*) FROM _migrations",
+            [], |r| r.get(0),
+        ).unwrap();
+        assert_eq!(count, 2, "exactly 2 migration records, not duplicated");
+    }
+
+    #[test]
+    fn migrate_seeds_gwp_values() {
+        let dir = tempdir().unwrap();
+        let db = Database::open(&dir.path().join("c12.db")).unwrap();
+        db.migrate().unwrap();
+        let conn = db.0.lock().unwrap();
+        let count: i64 = conn.query_row(
+            "SELECT COUNT(*) FROM gwp_values WHERE ar_version = 'AR6'",
+            [], |r| r.get(0),
+        ).unwrap();
+        assert!(count > 0, "AR6 GWP values should be seeded");
+        let co2_gwp: f64 = conn.query_row(
+            "SELECT gwp_100 FROM gwp_values WHERE gas = 'CO2' AND ar_version = 'AR6'",
+            [], |r| r.get(0),
+        ).unwrap();
+        assert_eq!(co2_gwp, 1.0, "CO2 GWP is always 1.0");
+    }
+}
+
 fn register_math_functions(conn: &Connection) -> Result<()> {
     let flags = FunctionFlags::SQLITE_UTF8 | FunctionFlags::SQLITE_DETERMINISTIC;
     conn.create_scalar_function("SQRT", 1, flags, |ctx| {

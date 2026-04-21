@@ -79,3 +79,77 @@ pub fn calculate_and_store(
         scope3_intensity_ratio,
     })
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::db::test_conn;
+    use rusqlite::params;
+
+    fn setup(conn: &Connection) -> i64 {
+        conn.execute(
+            "INSERT INTO organizations (name, boundary_method) VALUES ('Acme', 'operational_control')",
+            [],
+        ).unwrap();
+        let org_id = conn.last_insert_rowid();
+        conn.execute(
+            "INSERT INTO reporting_periods (org_id, year, start_date, end_date)
+             VALUES (?1, 2024, '2024-01-01', '2024-12-31')",
+            params![org_id],
+        ).unwrap();
+        conn.last_insert_rowid()
+    }
+
+    fn calc(conn: &Connection, period_id: i64,
+            s1: bool, s2: bool, s3: bool,
+            scope1: f64, scope2: f64, scope3: f64,
+            metric: f64) -> IntensityResult {
+        calculate_and_store(conn, period_id, s1, s2, s3,
+            "Revenue", metric, "USD", scope1, scope2, scope3).unwrap()
+    }
+
+    #[test]
+    fn intensity_ratio_is_total_over_metric() {
+        // GRI 305-4: intensity = tCO2e / metric unit
+        // 10 tCO2e scope1 + 5 tCO2e scope2 = 15 tCO2e / 1000 USD = 0.015
+        let conn = test_conn();
+        let period_id = setup(&conn);
+        let r = calc(&conn, period_id, true, true, false, 10.0, 5.0, 0.0, 1000.0);
+        assert!((r.intensity_ratio - 0.015).abs() < 1e-9);
+        assert!((r.total_emissions_tco2e - 15.0).abs() < 1e-9);
+    }
+
+    #[test]
+    fn excluded_scopes_not_in_total() {
+        let conn = test_conn();
+        let period_id = setup(&conn);
+        let r = calc(&conn, period_id, true, false, false, 10.0, 999.0, 999.0, 1000.0);
+        assert!((r.total_emissions_tco2e - 10.0).abs() < 1e-9);
+    }
+
+    #[test]
+    fn scope3_intensity_reported_separately() {
+        // GRI 305-4: scope 3 intensity must be disclosed separately
+        let conn = test_conn();
+        let period_id = setup(&conn);
+        let r = calc(&conn, period_id, true, true, true, 10.0, 5.0, 3.0, 1000.0);
+        let s3_ratio = r.scope3_intensity_ratio.expect("scope3 ratio must be present");
+        assert!((s3_ratio - 0.003).abs() < 1e-9);
+    }
+
+    #[test]
+    fn scope3_intensity_absent_when_scope3_excluded() {
+        let conn = test_conn();
+        let period_id = setup(&conn);
+        let r = calc(&conn, period_id, true, true, false, 10.0, 5.0, 3.0, 1000.0);
+        assert!(r.scope3_intensity_ratio.is_none());
+    }
+
+    #[test]
+    fn zero_metric_returns_zero_ratio() {
+        let conn = test_conn();
+        let period_id = setup(&conn);
+        let r = calc(&conn, period_id, true, true, false, 10.0, 5.0, 0.0, 0.0);
+        assert_eq!(r.intensity_ratio, 0.0);
+    }
+}
