@@ -17,5 +17,7 @@ Cargo.lock
 .idea
 *.swp
 
+# Build files
 worker/target
+worker/.wrangler
 ui/target
